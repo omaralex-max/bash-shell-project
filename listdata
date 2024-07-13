@@ -14,7 +14,7 @@ execute_query() {
     local query="$1"
     local database="$2"
 
-    mysql -u "$MYSQL_USER" -h "$MYSQL_HOST" "$database" -e "$query"
+    mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" "$database" -e "$query"
 }
 #-----------------------------------------------------------------------------
 # Function to list all databases
