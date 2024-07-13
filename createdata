@@ -8,6 +8,16 @@ MYSQL_USER="root"
 MYSQL_HOST="localhost"
 
 #-----------------------------------------------------------------------------
+# Function to execute a MySQL query and print the results
+
+execute_query() {
+    local query="$1"
+    local database="$2"
+
+    mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" "$database" -e "$query"
+}
+
+#-----------------------------------------------------------------------------
 # Function to create a new database
 
 create_database() {
@@ -22,3 +32,5 @@ create_database() {
         echo "Failed to create database '$database'."
     fi
 }
+
+create_database
