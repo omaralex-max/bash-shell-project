@@ -1,0 +1,18 @@
+#!/bin/bash
+
+#-----------------------------------------------------------------------------
+# MySQL login details
+
+MYSQL_USER="root"
+
+MYSQL_HOST="localhost"
+
+#-----------------------------------------------------------------------------
+# Function to execute a MySQL query and print the results
+
+execute_query() {
+    local query="$1"
+    local database="$2"
+
+    mysql -u "$MYSQL_USER" -h "$MYSQL_HOST" "$database" -e "$query"
+}
