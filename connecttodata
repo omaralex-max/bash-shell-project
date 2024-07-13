@@ -1,0 +1,14 @@
+#!/bin/bash
+
+# Function to execute a MySQL query
+execute_query_mysql() {
+    local query="$1"
+    mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" -D "$MYSQL_DB" -e "$query"
+}
+
+# Prompt user for MySQL connection details
+read -p "Enter MySQL database name: " MYSQL_DB
+
+# Connect to MySQL and run a query
+query="SHOW TABLES;"
+execute_query_mysql "$query"

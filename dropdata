@@ -1,0 +1,27 @@
+#!/bin/bash
+
+#-----------------------------------------------------------------------------
+# MySQL login details
+
+MYSQL_USER="root"
+
+MYSQL_HOST="localhost"
+
+#-----------------------------------------------------------------------------
+# Function to execute a MySQL query and print the results
+
+execute_query() {
+    local query="$1"
+    local database="$2"
+
+    mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" "$database" -e "$query"
+}
+
+#-----------------------------------------------------------------------------
+# Function to drop database
+
+
+read -p "Enter the MySQL database name to drop: " database_name
+
+query="DROP DATABASE IF EXISTS $database_name;"
+execute_query "$query"
