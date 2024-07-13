@@ -16,3 +16,12 @@ execute_query() {
 
     mysql -u "$MYSQL_USER" -h "$MYSQL_HOST" "$database" -e "$query"
 }
+#-----------------------------------------------------------------------------
+# Function to list all databases
+
+list_databases() {
+    execute_query "SHOW DATABASES;"
+}
+
+
+list_databases
