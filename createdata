@@ -7,3 +7,18 @@ MYSQL_USER="root"
 
 MYSQL_HOST="localhost"
 
+#-----------------------------------------------------------------------------
+# Function to create a new database
+
+create_database() {
+    local database
+    read -p "Enter the name of the new database: " database
+    
+    execute_query "CREATE DATABASE IF NOT EXISTS $database" ""
+    
+    if [ $? -eq 0 ]; then
+        echo "Database '$database' created successfully."
+    else
+        echo "Failed to create database '$database'."
+    fi
+}
