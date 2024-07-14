@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Source the connection details from the connection script
+source ./connecttodata
+
+# Function to execute a MySQL query
+execute_query_mysql() {
+    local query="$1"
+    mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" -D "$MYSQL_DB" -e "$query"
+}
+
+# Check if the table exists
+check_table_query="SHOW TABLES LIKE 'your_table_name';"
+table_exists=$(execute_query_mysql "$check_table_query")
+
+# If the table does not exist, create it
+if [ -z "$table_exists" ]; then
+    echo "Table 'your_table_name' does not exist. Creating table..."
+    create_table_query="CREATE TABLE your_table_name (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        column1 VARCHAR(255),
+        column2 VARCHAR(255)
+    );"
+    execute_query_mysql "$create_table_query"
+    
+    # Check if the table creation was successful
+    if [ $? -eq 0 ]; then
+        echo "Table 'your_table_name' created successfully."
+    else
+        echo "Failed to create table 'your_table_name'."
+        exit 1
+    fi
+fi
+
+# Define your insert query
+insert_query="INSERT INTO your_table_name (column1, column2) VALUES ('value1', 'value2');"
+
+# Execute the insert query
+execute_query_mysql "$insert_query"
+
+# Check if the insert was successful
+if [ $? -eq 0 ]; then
+    echo "Data inserted successfully into $MYSQL_DB"
+else
+    echo "Failed to insert data into $MYSQL_DB"
+fi

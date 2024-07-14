@@ -1,14 +1,33 @@
 #!/bin/bash
 
-# Function to execute a MySQL query
+# ----------------------------------Function to execute a MySQL query
 execute_query_mysql() {
     local query="$1"
-    mysql -u "$MYSQL_USER" -p"$MYSQL_PASSWORD" -h "$MYSQL_HOST" -D "$MYSQL_DB" -e "$query"
+    mysql  -D "$MYSQL_DB" -e "$query"
 }
 
-# Prompt user for MySQL connection details
+# --------------------------------------enter data
 read -p "Enter MySQL database name: " MYSQL_DB
 
-# Connect to MySQL and run a query
+
+# ----------------------------------Export script for use in other scripts
+export MYSQL_DB
+
+# ---------------------------------to connect to MySQL
+connect_to_mysql() {
+    local query="$1"
+    mysql  -D "$MYSQL_DB" -e "$query"
+}
+
 query="SHOW TABLES;"
-execute_query_mysql "$query"
+connect_to_mysql "$query"
+
+# ----------------------------------------show tables
+connect_to_mysql "USE $MYSQL_DB; SHOW TABLES;"
+
+# ----------------------------------------Check if connection was successful
+if [ $? -eq 0 ]; then
+    echo "You Connected To $MYSQL_DB Successfully"
+else
+    echo "Failed to connect to $MYSQL_DB"
+fi
